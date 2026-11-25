@@ -8,9 +8,12 @@ A clean, beginner-friendly Python web automation and testing project using [Play
 
 ```text
 project/
+├── pages/
+│   ├── __init__.py
+│   └── home_page.py           # Centralized URLs, locators, and actions
 ├── tests/
 │   ├── conftest.py            # Global test settings (viewport size, SSL rules)
-│   └── test_example.py        # Example test cases
+│   └── test_example.py        # Example test cases using Page Object Model
 ├── .gitignore                 # Specifies files Git must ignore (.venv, cache, reports)
 ├── pytest.ini                 # Pytest configurations (default flags, test folders)
 ├── requirements.txt           # List of all project dependencies
@@ -72,7 +75,12 @@ python -m venv .venv
    - Injects the `page` fixture into test functions so you don't need to manually start/stop browser instances.
    - Provides CLI flags like `--headed`, `--browser`, `--slowmo`, `--tracing`, and automatic screenshot capture on failure.
 
-4. **`python-dotenv`**
+4. **`pytest-html`**
+   - Clean, lightweight HTML report generator.
+   - Automatically generates a self-contained visual report (`reports/report.html`) after test runs.
+   - No external servers, Java runtimes, or command-line binaries required.
+
+5. **`python-dotenv`**
    - Allows loading configuration and credentials (like base URLs, usernames, passwords) from a `.env` file instead of hardcoding them in test scripts.
 
 ---
@@ -182,3 +190,15 @@ Each command below is placed in its own block so you can copy it with one click:
 ```powershell
 .\.venv\Scripts\playwright codegen https://playwright.dev
 ```
+
+---
+
+## 📊 Viewing the Test Report
+
+Whenever you run `pytest`, a self-contained visual HTML report is automatically created in `reports/report.html` (no screenshots are stored, keeping the project light).
+
+#### Open report in your default browser (Chrome/Edge):
+```powershell
+Start-Process reports/report.html
+```
+*(Or navigate to `reports/` in File Explorer and double-click `report.html`)*

@@ -1,10 +1,12 @@
 import re
 from playwright.sync_api import Page, expect
+from pages.home_page import HomePage
 
 
 def test_has_title(page: Page):
     """Test that the Playwright Python home page contains the expected title."""
-    page.goto("https://playwright.dev/python")
+    home_page = HomePage(page)
+    home_page.navigate()
 
     # Expect page title to contain substring
     expect(page).to_have_title(re.compile("Playwright"))
@@ -12,13 +14,14 @@ def test_has_title(page: Page):
 
 def test_get_started_link(page: Page):
     """Test navigating to the installation guide via Get started link."""
-    page.goto("https://playwright.dev/python")
+    home_page = HomePage(page)
+    home_page.navigate()
 
-    # Click the 'Get started' link
-    page.get_by_role("link", name="Get started").click()
+    # Click the 'Get started' link via Page Object
+    home_page.click_get_started()
 
     # Expect the URL to contain 'intro'
     expect(page).to_have_url(re.compile(".*intro"))
 
     # Expect the heading 'Installation' to be visible
-    expect(page.get_by_role("heading", name="Installation")).to_be_visible()
+    expect(home_page.installation_heading).to_be_visible()
