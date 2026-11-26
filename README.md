@@ -8,12 +8,24 @@ A clean, beginner-friendly Python web automation and testing project using [Play
 
 ```text
 project/
+├── manual test cases/
+│   └── Manual_Test_Cases.xlsx # Formatted Excel sheet mapping all test cases
 ├── pages/
 │   ├── __init__.py
-│   └── home_page.py           # Centralized URLs, locators, and actions
+│   ├── base_page.py           # Base page with shared browser utilities
+│   └── demo_page.py           # Demo app Page Object (URLs, locators, and actions)
 ├── tests/
-│   ├── conftest.py            # Global test settings (viewport size, SSL rules)
-│   └── test_example.py        # Example test cases using Page Object Model
+│   ├── assets/
+│   │   └── demo_app.html      # Self-contained testing application
+│   ├── conftest.py            # Global test settings & browser configs
+│   ├── test_forms.py          # UI & form interactions (inputs, dropdowns, checkboxes)
+│   ├── test_validations.py    # Assertions, attributes, visibility, titles
+│   ├── test_navigation.py     # Reloads, multi-tab popups
+│   ├── test_dialogs.py        # JavaScript alerts and confirms
+│   ├── test_mouse_keyboard.py # Hover tooltips and keyboard shortcuts
+│   ├── test_files.py          # File upload and file download
+│   ├── test_network.py        # Network interception and API mocking
+│   └── test_responsive.py     # Mobile vs desktop viewports
 ├── .gitignore                 # Specifies files Git must ignore (.venv, cache, reports)
 ├── pytest.ini                 # Pytest configurations (default flags, test folders)
 ├── requirements.txt           # List of all project dependencies
@@ -161,7 +173,7 @@ def test_playwright_docs_search(page: Page):
 
 Each command below is placed in its own block so you can copy it with one click:
 
-#### Run all tests (headless)
+#### Run all tests (runs in 4 parallel instances automatically)
 ```powershell
 .\.venv\Scripts\pytest
 ```
@@ -178,12 +190,12 @@ Each command below is placed in its own block so you can copy it with one click:
 
 #### Run a specific test file
 ```powershell
-.\.venv\Scripts\pytest tests/test_example.py --headed
+.\.venv\Scripts\pytest tests/test_forms.py --headed
 ```
 
 #### Run a specific test function by name
 ```powershell
-.\.venv\Scripts\pytest -k "test_has_title" --headed
+.\.venv\Scripts\pytest -k "test_form_text_input" --headed
 ```
 
 #### Auto-record user actions into Python code (Codegen)

@@ -15,9 +15,9 @@ def browser_context_args(browser_context_args):
     }
 
 
-@pytest.fixture
-def logged_in_context(context: BrowserContext):
-    """Example fixture for pre-configuring authentication or cookies if needed."""
-    # Custom cookies/storage state can be set here:
-    # context.add_cookies([...])
-    yield context
+@pytest.fixture(autouse=True)
+def configure_timeouts(page: Page):
+    """Fail fast: Do NOT wait 30 seconds. Fail in 10 seconds if a page or element hangs."""
+    page.set_default_navigation_timeout(10000)  # 10s max for page.goto()
+    page.set_default_timeout(10000)             # 3s max for click(), fill(), etc.
+    yield
