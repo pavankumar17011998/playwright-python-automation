@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playwright Automation Sandbox</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
+    .card { background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    h2 { margin-top: 0; color: #333; }
+    .nav-desktop { display: flex; gap: 15px; }
+    .nav-mobile { display: none; }
+    @media (max-width: 600px) {
+      .nav-desktop { display: none; }
+      .nav-mobile { display: block; background: #eee; padding: 10px; }
+    }
+    .tooltip-box { display: none; background: #333; color: white; padding: 5px 10px; border-radius: 4px; font-size: 12px; }
+    .hover-trigger:hover + .tooltip-box { display: inline-block; }
+    .hidden-el { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Playwright Automation Demo App</h1>
+
+  <!-- Navigation -->
+  <nav class="card">
+    <h2>Navigation Bar</h2>
+    <div class="nav-desktop" id="desktop-nav">
+      <a href="#home" id="nav-home">Home</a>
+      <a href="#about" id="nav-about">About</a>
+      <a href="https://playwright.dev" target="_blank" id="open-new-tab">Open External Tab</a>
+    </div>
+    <div class="nav-mobile" id="mobile-hamburger">
+      <button id="hamburger-btn">☰ Mobile Menu</button>
+    </div>
+  </nav>
+
+  <!-- Forms and UI Controls -->
+  <section class="card" id="form-section">
+    <h2>User Profile Form</h2>
+    <form id="user-form" onsubmit="event.preventDefault(); document.getElementById('form-result').innerText = 'Welcome, ' + document.getElementById('username').value + '!';">
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Enter username">
+      </div>
+      <br>
+      <div>
+        <label for="country">Country:</label>
+        <select id="country" name="country">
+          <option value="">Select country</option>
+          <option value="US">United States</option>
+          <option value="IN">India</option>
+          <option value="DE">Germany</option>
+        </select>
+      </div>
+      <br>
+      <div>
+        <input type="checkbox" id="terms" name="terms">
+        <label for="terms">I agree to terms</label>
+      </div>
+      <br>
+      <button type="submit" id="submit-btn">Submit Form</button>
+    </form>
+    <p id="form-result" style="color: green; font-weight: bold;"></p>
+  </section>
+
+  <!-- Interactive Controls: Hover, Dialogs -->
+  <section class="card">
+    <h2>Dialogs & Mouse Interactions</h2>
+    <div>
+      <span class="hover-trigger" id="hover-target" style="text-decoration: underline; cursor: pointer;">Hover over me</span>
+      <span class="tooltip-box" id="hover-tooltip">Tooltip details revealed!</span>
+    </div>
+    <br>
+    <div>
+      <button id="alert-btn" onclick="alert('Hello from Playwright alert!')">Show Alert</button>
+      <button id="confirm-btn" onclick="document.getElementById('dialog-result').innerText = confirm('Confirm this action?') ? 'Confirmed' : 'Cancelled'">Show Confirm</button>
+      <p id="dialog-result"></p>
+    </div>
+  </section>
+
+  <!-- Files: Upload & Download -->
+  <section class="card">
+    <h2>Files Handling</h2>
+    <div>
+      <label for="file-uploader">Upload File:</label>
+      <input type="file" id="file-uploader" onchange="document.getElementById('upload-status').innerText = 'Uploaded: ' + this.files[0].name">
+      <p id="upload-status"></p>
+    </div>
+    <br>
+    <div>
+      <a id="download-link" href="data:text/plain;charset=utf-8,Playwright%20Downloaded%20Report" download="sample_report.txt">Download Text Report</a>
+    </div>
+  </section>
+
+  <!-- Network Mocking Area -->
+  <section class="card">
+    <h2>API Data Section</h2>
+    <button id="fetch-users-btn" onclick="fetch('https://api.example.com/users').then(res => res.json()).then(data => { document.getElementById('api-user-name').innerText = data.user; }).catch(err => { document.getElementById('api-user-name').innerText = 'Fetch Failed'; })">Fetch User Data</button>
+    <p id="api-user-name">No data yet</p>
+  </section>
+</body>
+</html>
